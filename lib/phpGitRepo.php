@@ -12,6 +12,8 @@
  * Tickets:       http://github.com/ornicar/php-git-repo/issues
  */
 
+require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
+
 class phpGitRepo
 {
   /**
