@@ -43,12 +43,20 @@ class phpGitRepoCommand
 
     if(0 !== $returnVar)
     {
-      throw new RuntimeException(sprintf(
-        'Command %s failed with code %s: %s',
-        $commandToRun,
-        $returnVar,
-        $output
-      ), $returnVar);
+      // Git 1.5.x returns 1 when running "git status"
+      if(1 === $returnVar && 0 === strncmp($this->commandString, 'git status', 10))
+      {
+        // it's ok
+      }
+      else
+      {
+        throw new RuntimeException(sprintf(
+          'Command %s failed with code %s: %s',
+          $commandToRun,
+          $returnVar,
+          $output
+        ), $returnVar);
+      }
     }
 
     return $output;
