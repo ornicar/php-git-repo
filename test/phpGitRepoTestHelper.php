@@ -14,7 +14,7 @@ function _createTmpGitRepo(lime_test $t)
 
   try
   {
-    new phpGitRepo($repoDir);
+    new phpGitRepo($repoDir, true);
     $t->fail($repoDir.' is not a valid git repository');
   }
   catch(InvalidArgumentException $e)
@@ -23,11 +23,11 @@ function _createTmpGitRepo(lime_test $t)
   }
 
   $t->comment('Create Git repo');
-  exec('git init '. escapeshellarg($repoDir.'/.git'));
+  exec('git init '. escapeshellarg($repoDir));
   $t->ok(is_dir($repoDir.'/.git'), $repoDir.' is a Git repo');
 
-  $repo = new phpGitRepo($repoDir);
-  $t->pass($repoDir.' is a valid git repo');
+  $repo = new phpGitRepo($repoDir, true);
+  $t->isa_ok($repo, 'phpGitRepo', $repoDir.' is a valid git repo');
 
   $originalRepoDir = dirname(__FILE__).'/repo';
   foreach(array('README.markdown', 'index.php') as $file)
