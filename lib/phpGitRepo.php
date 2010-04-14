@@ -21,22 +21,88 @@ class phpGitRepo
    */
   protected $dir;
 
-  public function __construct($dir)
+  protected $debug;
+
+  protected $options = array(
+    'command_class' => 'phpGitRepoCommand'
+  );
+
+  /**
+   * Instanciate a new HTML Writer
+   *
+   * @param   array $options
+   */
+  public function __construct($dir, $debug = false, array $options = array())
   {
-    if(!$this->isValidGitRepo($dir))
+    $this->dir      = $dir;
+    $this->debug    = $debug;
+    $this->options  = array_merge($this->options, $options);
+
+    $this->checkIsValidGitRepo();
+  }
+
+  /**
+   * Get branches list
+   *
+   * @return array list of branches names
+   */
+  public function getBranches()
+  {
+    return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->run('branch'))));
+  }
+
+  /**
+   * Get current branch
+   *
+   * @return string the current branch name
+   */
+  public function getCurrentBranch()
+  {
+    $output = $this->run('branch');
+
+    foreach(explode("\n", $this->run('branch')) as $branchLine)
     {
-      throw new InvalidArgumentException($dir.' is not a valid Git repository');
+      if('*' === $branchLine{0})
+      {
+        return substr($branchLine, 2);
+      }
     }
   }
 
   /**
-   * Check is a directory is a valid Git repository
+   * Tell if a branch exists
    *
-   * @param   string    $dir  the repository directory
-   * @return  boolean         true if $dir is a valid Git repo, false otherwise
+   * @return  boolean true if the branch exists, false otherwise
    */
-  public function isValidGitRepo($dir)
+  public function hasBranch($branchName)
   {
-    return is_dir($dir.'/.git');
+    return in_array($branchName, $this->getBranches());
+  }
+
+  /**
+   * Check if a directory is a valid Git repository
+   */
+  public function checkIsValidGitRepo()
+  {
+    if(!is_dir($this->dir.'/.git'))
+    {
+      throw new InvalidArgumentException($this->dir.' is not a valid Git repository');
+    }
+
+    $this->run('status');
+  }
+
+  /**
+   * Run any git command, like "status" or "checkout -b mybranch origin/mybranch"
+   *
+   * @throws  RuntimeException
+   * @param   string  $commandString
+   * @return  string  $output
+   */
+  public function run($commandString)
+  {
+    $command = new $this->options['command_class']($this->dir, $commandString, $this->debug);
+
+    return $command->run();
   }
 }
