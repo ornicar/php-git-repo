@@ -105,4 +105,14 @@ class phpGitRepo
 
     return $command->run();
   }
+
+  /**
+   * Get the repository directory
+   *
+   * @return  string  the repository directory
+   */
+  public function getDir()
+  {
+    return $this->dir;
+  }
 }
