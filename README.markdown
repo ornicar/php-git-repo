@@ -35,11 +35,14 @@ The run() method throws a RuntimeException if the command is invalid:
 Get the branches list:
 
     $branches = $repo->getBranches();
+    // returns array('master', 'other_branch')
 
 Get the current branch:
 
-    $branch = $repo->getBranch();
+    $branch = $repo->getCurrentBranch();
+    // returns 'master'
 
-Know if the repo has a given branch
+Know if the repo has a given branch:
 
-    $hasBranch = $repo->hasBranch('some-branch');
+    $hasBranch = $repo->hasBranch('master');
+    // returns true
