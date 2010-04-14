@@ -46,3 +46,9 @@ Know if the repo has a given branch:
 
     $hasBranch = $repo->hasBranch('master');
     // returns true
+
+## Run test suite
+
+All code is fully unit tested. To run tests on your server, from a CLI, run
+
+    php /path/to/php-git-repo/prove.php
