@@ -48,7 +48,7 @@ class phpGitRepo
    */
   public function getBranches()
   {
-    return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->run('branch'))));
+    return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->git('branch'))));
   }
 
   /**
@@ -58,9 +58,9 @@ class phpGitRepo
    */
   public function getCurrentBranch()
   {
-    $output = $this->run('branch');
+    $output = $this->git('branch');
 
-    foreach(explode("\n", $this->run('branch')) as $branchLine)
+    foreach(explode("\n", $this->git('branch')) as $branchLine)
     {
       if('*' === $branchLine{0})
       {
@@ -89,7 +89,7 @@ class phpGitRepo
       throw new InvalidArgumentException($this->dir.' is not a valid Git repository');
     }
 
-    $this->run('status');
+    $this->git('status');
   }
 
   /**
@@ -99,7 +99,7 @@ class phpGitRepo
    * @param   string  $commandString
    * @return  string  $output
    */
-  public function run($commandString)
+  public function git($commandString)
   {
     $command = new $this->options['command_class']($this->dir, $commandString, $this->debug);
 

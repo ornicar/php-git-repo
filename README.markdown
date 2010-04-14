@@ -11,14 +11,14 @@ Manage a Git repository with PHP.
 Any git command can be run:
 
     // change current branch to master
-    $repo->run('checkout master');
+    $repo->git('checkout master');
 
     // add a remote repo
-    $repo->run('remote add origin git://github.com/ornicar/php-git-repo.git');
+    $repo->git('remote add origin git://github.com/ornicar/php-git-repo.git');
 
 The run() method returns the output string:
 
-    echo $repo->run('log --oneline');
+    echo $repo->git('log --oneline');
     // e30b70b Move test repo to system tmp dir, introduce phpGitRepoCommand
     // 01fabb1 Add test repo
     // 12a95e6 Add base class with basic unit test
@@ -27,7 +27,7 @@ The run() method returns the output string:
 
 The run() method throws a RuntimeException if the command is invalid:
 
-    $repo->run('wtf'); // this git command does NOT exist
+    $repo->git('wtf'); // this git command does NOT exist
     // throws RuntimeException
 
 ## Get branches informations
