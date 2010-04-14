@@ -50,9 +50,9 @@ $t->is($repo->getCurrentBranch(), 'master', 'Current branch: master');
 try
 {
   $repo->run('wtf');
-  $t->pass('wtf is not a valid command');
+  $t->fail('wtf is not a valid command');
 }
 catch(RuntimeException $e)
 {
-  $t->fail('wtf is not a valid command');
+  $t->pass('wtf is not a valid command');
 }
