@@ -101,6 +101,11 @@ class phpGitRepo
    */
   public function git($commandString)
   {
+	// use option [git] to location git binary...
+	if(isset($this->options['git']) && preg_match("@git@im",$this->options['git'])) {
+		$commandString = trim($this->options['git'])." ".$commandString;
+	}
+
     $command = new $this->options['command_class']($this->dir, $commandString, $this->debug);
 
     return $command->run();

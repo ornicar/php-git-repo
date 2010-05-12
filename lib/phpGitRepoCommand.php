@@ -13,7 +13,7 @@ class phpGitRepoCommand
     $commandString = trim($commandString);
 
     // Add git prefix if missing
-    if(0 !== strncmp($commandString, 'git ', 4))
+    if(!preg_match("@git@im",$commandString))
     {
       $commandString = 'git '.$commandString;
     }
@@ -35,7 +35,7 @@ class phpGitRepoCommand
     ob_start();
     passthru($commandToRun, $returnVar);
     $output = ob_get_clean();
-    
+
     if($this->debug)
     {
       print $output."\n";
