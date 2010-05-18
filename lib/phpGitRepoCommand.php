@@ -12,12 +12,6 @@ class phpGitRepoCommand
   {
     $commandString = trim($commandString);
 
-    // Add git prefix if missing
-    if(!preg_match("@git@im",$commandString))
-    {
-      $commandString = 'git '.$commandString;
-    }
-
     $this->dir            = $dir;
     $this->commandString  = $commandString;
     $this->debug          = $debug;

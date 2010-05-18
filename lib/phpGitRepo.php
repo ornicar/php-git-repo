@@ -24,7 +24,8 @@ class phpGitRepo
   protected $debug;
 
   protected $options = array(
-    'command_class' => 'phpGitRepoCommand'
+    'command_class' => 'phpGitRepoCommand', // class used to create a command
+    'git_binary'    => 'git'                // path of the executable on the server (e.g. /usr/bin/git)
   );
 
   /**
@@ -101,10 +102,7 @@ class phpGitRepo
    */
   public function git($commandString)
   {
-	// use option [git] to location git binary...
-	if(isset($this->options['git']) && preg_match("@git@im",$this->options['git'])) {
-		$commandString = trim($this->options['git'])." ".$commandString;
-	}
+	$commandString = trim($this->options['git_binary']).' '.trim($commandString);
 
     $command = new $this->options['command_class']($this->dir, $commandString, $this->debug);
 

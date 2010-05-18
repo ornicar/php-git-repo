@@ -56,3 +56,19 @@ catch(RuntimeException $e)
 {
   $t->pass('wtf is not a valid command');
 }
+
+$t->comment('Use a valid git binary: /usr/bin/git');
+
+$repo = _createTmpGitRepo($t, array('git_binary' => '/usr/bin/git'));
+
+$t->comment('Use a invalid git binary: /usr/bin/git-foobar');
+
+try
+{
+  $repo = _createTmpGitRepo($t, array('git_binary' => '/usr/bin/git-foobar'));
+  $t->fail('/usr/bin/git-foobar is not a valid git binary');
+}
+catch(RuntimeException $e)
+{
+  $t->pass('/usr/bin/git-foobar is not a valid git binary');
+}
