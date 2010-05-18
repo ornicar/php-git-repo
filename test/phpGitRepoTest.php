@@ -47,6 +47,11 @@ $repo->git('checkout master');
 
 $t->is($repo->getCurrentBranch(), 'master', 'Current branch: master');
 
+$t->comment('repeat "git " in the command string');
+$repo->git('git checkout other_branch');
+
+$t->is($repo->getCurrentBranch(), 'other_branch', 'Current branch: other_branch');
+
 try
 {
   $repo->git('wtf');
@@ -59,13 +64,13 @@ catch(RuntimeException $e)
 
 $t->comment('Use a valid git binary: /usr/bin/git');
 
-$repo = _createTmpGitRepo($t, array('git_binary' => '/usr/bin/git'));
+$repo = _createTmpGitRepo($t, array('git_executable' => '/usr/bin/git'));
 
 $t->comment('Use a invalid git binary: /usr/bin/git-foobar');
 
 try
 {
-  $repo = _createTmpGitRepo($t, array('git_binary' => '/usr/bin/git-foobar'));
+  $repo = _createTmpGitRepo($t, array('git_executable' => '/usr/bin/git-foobar'));
   $t->fail('/usr/bin/git-foobar is not a valid git binary');
 }
 catch(RuntimeException $e)
