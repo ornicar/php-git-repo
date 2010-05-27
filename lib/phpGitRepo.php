@@ -29,7 +29,7 @@ class phpGitRepo
   );
 
   /**
-   * Instanciate a new HTML Writer
+   * Instanciate a new Git repository wrapper
    *
    * @param   array $options
    */
