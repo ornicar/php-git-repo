@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Include the command class
+ */
+require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
+
+/**
  * Simple PHP wrapper for Git repository
  *
  * @link      http://github.com/ornicar/php-git-repo
@@ -11,9 +16,6 @@
  * Documentation: http://github.com/ornicar/php-git-repo/blob/master/README.markdown
  * Tickets:       http://github.com/ornicar/php-git-repo/issues
  */
-
-require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
-
 class phpGitRepo
 {
   /**
@@ -21,8 +23,15 @@ class phpGitRepo
    */
   protected $dir;
 
+  /**
+   * @var boolean Whether to enable debug mode or not
+   * When debug mode is on, commands and their output are displayed
+   */
   protected $debug;
 
+  /**
+   * @var array of options
+   */
   protected $options = array(
     'command_class'   => 'phpGitRepoCommand', // class used to create a command
     'git_executable'  => '/usr/bin/git'       // path of the executable on the server
