@@ -57,15 +57,22 @@ Some shortcut methods are provided to deal with branches in a convenient way.
     $hasBranch = $repo->hasBranch('master');
     // returns true
 
+## Debug mode
+
+`phpGitRepo` constructor second parameter lets you enable debug mode.
+When debug mode is on, commands and their output are displayed.
+
+    $repo = new phpGitRepo('/path/to/the/git/repo', true);
+
 ## Configure
 
-`phpGitRepo` can be configured by passing an array of options to the constructor.
+`phpGitRepo` can be configured by passing an array of options to the constructor third parameter.
 
 ### Change git executable path
 
 You may need to provide the path to the git executable.
 
-    $repo = new phpGitRepo('/path/to/the/git/repo', array('git_executable' => '/usr/bin/git'));
+    $repo = new phpGitRepo('/path/to/the/git/repo', false, array('git_executable' => '/usr/bin/git'));
 
 On most Unix system, it's `/usr/bin/git`. On Windows, it may be `C:\Program Files\Git\bin`.
 
@@ -74,7 +81,7 @@ On most Unix system, it's `/usr/bin/git`. On Windows, it may be `C:\Program File
 By default, `phpGitRepo` will use `phpGitRepoCommand` class to implement Git commands.
 By replacing this option, you can use your own command implementation:
 
-    $repo = new phpGitRepo('/path/to/the/git/repo', array('command_class' => 'myGitCommand'));
+    $repo = new phpGitRepo('/path/to/the/git/repo', false, array('command_class' => 'myGitCommand'));
 
 ## Run test suite
 
