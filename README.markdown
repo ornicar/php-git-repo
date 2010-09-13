@@ -3,6 +3,11 @@
 Manage a Git repository with PHP.
 Provide an object oriented wrapper to run any Git command.
 
+## Requirements
+
+- PHP >= 5.2 (PHP 5.3 works fine)
+- Git >= 1.5
+
 ## Instanciate a phpGitRepo
 
     $repo = new phpGitRepo('/path/to/the/git/repo');
