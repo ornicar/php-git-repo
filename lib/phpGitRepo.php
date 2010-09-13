@@ -97,8 +97,6 @@ class phpGitRepo
         if(!is_dir($this->dir.'/.git')) {
             throw new InvalidArgumentException($this->dir.' is not a valid Git repository');
         }
-
-        $this->git('status');
     }
 
     /**
