@@ -1,3 +1,7 @@
+v1.2 - 2010-07-22
+
+ * Add phpGitRepo::getCommits to get an array of the more recent commits
+
 v1.1 - 2010-07-22
 
  * Add phpGitRepo::create to create a new Git repository on filesystem
