@@ -90,3 +90,22 @@ catch(InvalidArgumentException $e)
 {
   $t->fail($e->getMessage());
 }
+
+$repo = _createTmpGitRepo($t);
+file_put_contents($repo->getDir().'/README', 'No, finally, do not read me.');
+$repo->git('add README');
+$repo->git('commit -m "Add README"');
+unlink($repo->getDir().'/README');
+$repo->git('rm README');
+$repo->git('commit -m "Remove README"');
+
+$log = $repo->getCommits(7);
+$t->ok(is_array($log));
+$t->is(count($log), 2);
+$commit = $log[0];
+$t->ok(is_array($commit));
+$t->is($commit['message'], 'Remove README');
+$t->is($commit['author']['name'], 'ornicar');
+$t->is($commit['commiter']['name'], 'ornicar');
+$commit = $log[1];
+$t->is($commit['message'], 'Add README');
