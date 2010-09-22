@@ -83,10 +83,10 @@ $repoDir = sys_get_temp_dir().'/php-git-repo/'.uniqid();
 mkdir($repoDir);
 try
 {
-    $repo = phpGitRepo::create($repoDir);
-    $t->pass('Create a new Git repository in filesystem');
+  $repo = phpGitRepo::create($repoDir);
+  $t->pass('Create a new Git repository in filesystem');
 }
 catch(InvalidArgumentException $e)
 {
-    $t->fail($e->getMessage());
+  $t->fail($e->getMessage());
 }
