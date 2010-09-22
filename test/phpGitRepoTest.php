@@ -109,3 +109,8 @@ $t->is($commit['author']['name'], 'ornicar');
 $t->is($commit['commiter']['name'], 'ornicar');
 $commit = $log[1];
 $t->is($commit['message'], 'Add README');
+
+$t->is_deeply($repo->getTags(), array(), 'No tags');
+$repo->git('tag -am "tag 1" first_tag');
+$repo->git('tag -am "tag 2" second_tag');
+$t->is_deeply($repo->getTags(), array('first_tag', 'second_tag'), '2 tags');

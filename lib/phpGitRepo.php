@@ -9,7 +9,7 @@ require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
  * Simple PHP wrapper for Git repository
  *
  * @link      http://github.com/ornicar/php-git-repo
- * @version   1.2.1
+ * @version   1.3.0
  * @author    Thibault Duplessis <thibault.duplessis at gmail dot com>
  * @license   MIT License
  *
@@ -110,6 +110,17 @@ class phpGitRepo
     public function hasBranch($branchName)
     {
         return in_array($branchName, $this->getBranches());
+    }
+
+    /**
+     * Get tags list
+     *
+     * @return array list of tag names
+     */
+    public function getTags()
+    {
+        $output = $this->git('tag');
+        return $output ? array_filter(explode("\n", $output)) : array();
     }
 
     /**

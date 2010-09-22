@@ -70,6 +70,13 @@ Some shortcut methods are provided to deal with branches in a convenient way.
     $hasBranch = $repo->hasBranch('master');
     // returns true
 
+## Get tags informations
+
+### Get the tags list:
+
+    $tags = $repo->getTags();
+    // returns array('first_release', 'v2')
+
 ## Get commits informations
 
 You can get an array of the last commits on the current branch.
