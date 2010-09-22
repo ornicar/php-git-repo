@@ -32,7 +32,9 @@ class phpGitRepo
     /**
      * @var array of options
      */
-    protected $options = array(
+    protected $options;
+
+    protected static $defaultOptions = array(
         'command_class'   => 'phpGitRepoCommand', // class used to create a command
         'git_executable'  => '/usr/bin/git'       // path of the executable on the server
     );
@@ -48,9 +50,30 @@ class phpGitRepo
     {
         $this->dir      = $dir;
         $this->debug    = $debug;
-        $this->options  = array_merge($this->options, $options);
+        $this->options  = array_merge(self::$defaultOptions, $options);
 
         $this->checkIsValidGitRepo();
+    }
+
+    /**
+     * Create a new Git repository in filesystem, running "git init"
+     * Returns the git repository wrapper
+     *
+     * @param   string $dir real filesystem path of the repository
+     * @param   boolean $debug
+     * @param   array $options
+     * @return phpGitRepo
+     **/
+    public static function create($dir, $debug = false, array $options = array())
+    {
+        $options = array_merge(self::$defaultOptions, $options);
+        $commandString = $options['git_executable'].' init';
+        $command = new $options['command_class']($dir, $commandString, $debug);
+        $command->run();
+
+        $repo = new self($dir, $debug, $options);
+
+        return $repo;
     }
 
     /**
@@ -95,7 +118,7 @@ class phpGitRepo
     public function checkIsValidGitRepo()
     {
         if(!is_dir($this->dir.'/.git')) {
-            throw new InvalidArgumentException($this->dir.' is not a valid Git repository');
+            throw new InvalidGitRepositoryDirectoryException($this->dir.' is not a valid Git repository');
         }
     }
 
@@ -127,4 +150,8 @@ class phpGitRepo
     {
         return $this->dir;
     }
+}
+
+class InvalidGitRepositoryDirectoryException extends InvalidArgumentException
+{
 }
