@@ -71,9 +71,22 @@ $t->comment('Use a invalid git binary: /usr/bin/git-foobar');
 try
 {
   $repo = _createTmpGitRepo($t, array('git_executable' => '/usr/bin/git-foobar'));
+  $repo->git('status');
   $t->fail('/usr/bin/git-foobar is not a valid git binary');
 }
 catch(RuntimeException $e)
 {
   $t->pass('/usr/bin/git-foobar is not a valid git binary');
+}
+
+$repoDir = sys_get_temp_dir().'/php-git-repo/'.uniqid();
+mkdir($repoDir);
+try
+{
+    $repo = phpGitRepo::create($repoDir);
+    $t->pass('Create a new Git repository in filesystem');
+}
+catch(InvalidArgumentException $e)
+{
+    $t->fail($e->getMessage());
 }
