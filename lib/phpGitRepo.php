@@ -9,7 +9,7 @@ require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
  * Simple PHP wrapper for Git repository
  *
  * @link      http://github.com/ornicar/php-git-repo
- * @version   1.0
+ * @version   1.1
  * @author    Thibault Duplessis <thibault.duplessis at gmail dot com>
  * @license   MIT License
  *

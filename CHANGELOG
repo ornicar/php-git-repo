@@ -1,3 +1,7 @@
+v1.1 - 2010-07-22
+
+ * Add phpGitRepo::create to create a new Git repository on filesystem
+
 v1.0 - 2010-05-18
 
  * First stable release
