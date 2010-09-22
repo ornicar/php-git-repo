@@ -14,6 +14,14 @@ Provide an object oriented wrapper to run any Git command.
 
 It does NOT create a Git repo, but a PHP object to manipulate an existing Git repo.
 
+## Create a Git repository
+
+If the Git repository does not exist yet on filesystem, phpGitRepo can create it for you.
+
+    $repo = phpGitRepo::create('/path/to/the/git/repo');
+
+It runs `git init` and returns a phpGitRepo object.
+
 ## Run git commands
 
 git commands can be run with the same syntax as in the CLI. Some examples:
