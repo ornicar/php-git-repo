@@ -9,7 +9,7 @@ require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
  * Simple PHP wrapper for Git repository
  *
  * @link      http://github.com/ornicar/php-git-repo
- * @version   1.2
+ * @version   1.2.1
  * @author    Thibault Duplessis <thibault.duplessis at gmail dot com>
  * @license   MIT License
  *
@@ -120,7 +120,7 @@ class phpGitRepo
     public function getCommits($nbCommits = 10)
     {
         $dateFormat = 'iso';
-        $format = '"%H|%T|%an|%ae|%ad|%cn|%ce|%cd|%s|%b"';
+        $format = '"%H|%T|%an|%ae|%ad|%cn|%ce|%cd|%s"';
         $output = $this->git(sprintf('log -n %d --date=%s --format=format:%s', $nbCommits, $dateFormat, $format));
         $commits = array();
         foreach(explode("\n", $output) as $line) {
@@ -138,9 +138,7 @@ class phpGitRepo
                     'email' => $infos[6]
                 ),
                 'committed_date' => $infos[7],
-                'subject' => $infos[8],
-                'body' => $infos[9],
-                'message' => $infos[8].($infos[9] ? "\n\n".$infos[9] : '')
+                'message' => $infos[8]
             );
         }
 

@@ -99,9 +99,7 @@ Internally, this methods run `git log` with formatted output. The return value s
                     )
 
                 [committed_date] => 2010-09-22 19:17:35 +0200
-                [subject] => My commit subject
-                [body] => My commit body
-                [message] => My commit subject\n\nMy commit body
+                [message] => My commit message
             )
 
         [1] => Array
