@@ -70,6 +70,46 @@ Some shortcut methods are provided to deal with branches in a convenient way.
     $hasBranch = $repo->hasBranch('master');
     // returns true
 
+## Get commits informations
+
+You can get an array of the last commits on the current branch.
+
+    $commits = $repo->getCommits(15);
+    // returns an array of the 15 last commits
+
+Internally, this methods run `git log` with formatted output. The return value should look like:
+
+    Array
+    (
+        [0] => Array
+            (
+                [id] => affb0e84a11b4180b0fa0e5d36bdac73584f0d71
+                [tree] => 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+                [author] => Array
+                    (
+                        [name] => ornicar
+                        [email] => myemail@gmail.com
+                    )
+
+                [authored_date] => 2010-09-22 19:17:35 +0200
+                [commiter] => Array
+                    (
+                        [name] => ornicar
+                        [email] => myemail@gmail.com
+                    )
+
+                [committed_date] => 2010-09-22 19:17:35 +0200
+                [subject] => My commit subject
+                [body] => My commit body
+                [message] => My commit subject\n\nMy commit body
+            )
+
+        [1] => Array
+            (
+                ...
+
+The first commit is the more recent one.
+
 ## Debug mode
 
 `phpGitRepo` constructor second parameter lets you enable debug mode.
