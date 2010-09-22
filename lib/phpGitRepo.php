@@ -113,6 +113,41 @@ class phpGitRepo
     }
 
     /**
+     * Return the result of `git log` formatted in a PHP array
+     *
+     * @return array list of commits and their properties
+     **/
+    public function getCommits($nbCommits = 10)
+    {
+        $dateFormat = 'iso';
+        $format = '"%H|%T|%an|%ae|%ad|%cn|%ce|%cd|%s|%b"';
+        $output = $this->git(sprintf('log -n %d --date=%s --format=format:%s', $nbCommits, $dateFormat, $format));
+        $commits = array();
+        foreach(explode("\n", $output) as $line) {
+            $infos = explode('|', $line);
+            $commits[] = array(
+                'id' => $infos[0],
+                'tree' => $infos[1],
+                'author' => array(
+                    'name' => $infos[2],
+                    'email' => $infos[3]
+                ),
+                'authored_date' => $infos[4],
+                'commiter' => array(
+                    'name' => $infos[5],
+                    'email' => $infos[6]
+                ),
+                'committed_date' => $infos[7],
+                'subject' => $infos[8],
+                'body' => $infos[9],
+                'message' => $infos[8].($infos[9] ? "\n\n".$infos[9] : '')
+            );
+        }
+
+        return $commits;
+    }
+
+    /**
      * Check if a directory is a valid Git repository
      */
     public function checkIsValidGitRepo()
