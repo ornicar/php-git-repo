@@ -55,7 +55,7 @@ class phpGitRepoCommand
                 // it's ok
             }
             else {
-                throw new RuntimeException(sprintf(
+                throw new GitRuntimeException(sprintf(
                     'Command %s failed with code %s: %s',
                     $commandToRun,
                     $returnVar,
@@ -67,3 +67,5 @@ class phpGitRepoCommand
         return $output;
     }
 }
+
+class GitRuntimeException extends RuntimeException {}

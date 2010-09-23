@@ -47,9 +47,9 @@ The git() method returns the output string:
     58e7769 Fix readme
     c14c9ec Initial commit
 
-The git() method throws a RuntimeException if the command is invalid:
+The git() method throws a GitRuntimeException if the command is invalid:
 
-    $repo->git('wtf'); // this git command does NOT exist: throw RuntimeException
+    $repo->git('wtf'); // this git command does NOT exist: throw GitRuntimeException
 
 ## Get branches informations
 
