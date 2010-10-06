@@ -161,7 +161,7 @@ class phpGitRepo
      */
     public function checkIsValidGitRepo()
     {
-        if(!is_dir($this->dir.'/.git')) {
+        if(!file_exists($this->dir.'/.git/HEAD')) {
             throw new InvalidGitRepositoryDirectoryException($this->dir.' is not a valid Git repository');
         }
     }
