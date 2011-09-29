@@ -117,8 +117,6 @@ $commit = $log[0];
 $t->ok(is_array($commit));
 $t->is($commit['message'], 'Remove README');
 
-var_export($config->get(phpGitRepoConfig::USER_NAME));
-
 $t->is($commit['author']['name'], $config->get(phpGitRepoConfig::USER_NAME));
 $t->is($commit['commiter']['name'], $config->get(phpGitRepoConfig::USER_NAME));
 $commit = $log[1];
