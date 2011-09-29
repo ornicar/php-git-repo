@@ -20,7 +20,7 @@ class phpGitRepoConfig
    * Holds the actual configuration
    * @var array
    */
-  protected $configuration;
+  protected $configuration = array();
   
   /**
    * Holds the Git repository instance.
@@ -30,18 +30,9 @@ class phpGitRepoConfig
   
   public function __construct(phpGitRepo $gitRepo)
   {
-    $this->repository = $gitRepo;    
-    $this->loadConfiguraiton();
+    $this->repository = $gitRepo;
   }
-  
-  /**
-   * Load or reload the configuration
-   */
-  public function loadConfiguraiton()
-  {
-    $this->configuration = array_merge(parse_ini_string($this->repository->git('config -l')), parse_ini_string($this->repository->git('config --local -l')));
-  }
-
+    
   /**
    * Get a config option
    * 
@@ -52,8 +43,23 @@ class phpGitRepoConfig
    */
   public function get($configOption, $fallback = null)
   {
-    print_r($this->configuration);
-    return isset($this->configuration[$configOption]) ? $this->configuration[$configOption] : $fallback;
+    if (isset($this->configuration[$configOption])) {
+      $optionValue = $this->configuration[$configOption];
+    } else {      
+      if (array_key_exists($configOption, $this->configuration)) {
+        $optionValue = $fallback;
+      }
+      
+      try {
+        $optionValue = $this->repository->git(sprintf('config --get '.$configOption));        
+        $this->configuration[$configOption] = $optionValue;
+      } catch (GitRuntimeException $e) {
+        $optionValue = $fallback;
+        $this->configuration[$configOption] = null;
+      }
+    }
+    
+    return $optionValue;
   }
   
   /**
@@ -65,7 +71,7 @@ class phpGitRepoConfig
   public function set($configOption, $configValue)
   {
     $this->repository->git(sprintf('config --local %s %s', $configOption, $configValue));
-    $this->loadConfiguraiton();
+    unset($this->configuration[$configOption]);
   }
   
   /**
@@ -76,5 +82,7 @@ class phpGitRepoConfig
   public function remove($configOption)
   {
     $this->repository->git(sprintf('config --local --unset %s', $configOption));
-  }
+    unset($this->configuration[$configOption]);
+  }   
+  
 }
