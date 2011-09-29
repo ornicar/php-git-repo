@@ -64,7 +64,7 @@ class phpGitRepoCommand
             }
         }
 
-        return $output;
+        return trim($output);
     }
 }
 

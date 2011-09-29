@@ -4,6 +4,7 @@
  * Include the command class
  */
 require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
+require_once(dirname(__FILE__).'/phpGitRepoConfig.php');
 
 /**
  * Simple PHP wrapper for Git repository
@@ -74,6 +75,15 @@ class phpGitRepo
         $repo = new self($dir, $debug, $options);
 
         return $repo;
+    }
+    
+    /**
+     * Get the configuration for current 
+     * @return phpGitRepoConfig
+     */
+    public function getConfiguration()
+    {
+      return new phpGitRepoConfig($this);
     }
 
     /**

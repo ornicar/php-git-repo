@@ -92,6 +92,17 @@ catch(InvalidArgumentException $e)
 }
 
 $repo = _createTmpGitRepo($t);
+
+$config = $repo->getConfiguration();
+
+$t->ok($config->get('core.editor', true));
+$config->set('core.editor', 'nano');
+$t->is($config->get('core.editor'), 'nano');
+$t->is($config->get('core.editor'), 'nano');
+$config->remove('core.editor');
+$t->ok($config->get('core.editor', true));
+
+
 file_put_contents($repo->getDir().'/README', 'No, finally, do not read me.');
 $repo->git('add README');
 $repo->git('commit -m "Add README"');
@@ -105,8 +116,9 @@ $t->is(count($log), 2);
 $commit = $log[0];
 $t->ok(is_array($commit));
 $t->is($commit['message'], 'Remove README');
-$t->is($commit['author']['name'], 'ornicar');
-$t->is($commit['commiter']['name'], 'ornicar');
+
+$t->is($commit['author']['name'], $config->get(phpGitRepoConfig::USER_NAME));
+$t->is($commit['commiter']['name'], $config->get(phpGitRepoConfig::USER_NAME));
 $commit = $log[1];
 $t->is($commit['message'], 'Add README');
 
