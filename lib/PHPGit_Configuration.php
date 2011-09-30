@@ -11,7 +11,7 @@
  * Documentation: http://github.com/ornicar/php-git-repo/blob/master/README.markdown
  * Tickets:       http://github.com/ornicar/php-git-repo/issues
  */
-class phpGitRepoConfig
+class PHPGit_Configuration
 {
   const USER_NAME = 'user.name';
   const USER_EMAIL = 'user.email';
@@ -24,11 +24,11 @@ class phpGitRepoConfig
   
   /**
    * Holds the Git repository instance.
-   * @var phpGitRepo
+   * @var PHPGit_Repository
    */
   protected $repository;
   
-  public function __construct(phpGitRepo $gitRepo)
+  public function __construct(PHPGit_Repository $gitRepo)
   {
     $this->repository = $gitRepo;
   }

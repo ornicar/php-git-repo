@@ -3,8 +3,8 @@
 /**
  * Include the command class
  */
-require_once(dirname(__FILE__).'/phpGitRepoCommand.php');
-require_once(dirname(__FILE__).'/phpGitRepoConfig.php');
+require_once(dirname(__FILE__).'/PHPGit_Command.php');
+require_once(dirname(__FILE__).'/PHPGit_Configuration.php');
 
 /**
  * Simple PHP wrapper for Git repository
@@ -17,7 +17,7 @@ require_once(dirname(__FILE__).'/phpGitRepoConfig.php');
  * Documentation: http://github.com/ornicar/php-git-repo/blob/master/README.markdown
  * Tickets:       http://github.com/ornicar/php-git-repo/issues
  */
-class phpGitRepo
+class PHPGit_Repository
 {
     /**
      * @var string  local repository directory
@@ -36,7 +36,7 @@ class phpGitRepo
     protected $options;
 
     protected static $defaultOptions = array(
-        'command_class'   => 'phpGitRepoCommand', // class used to create a command
+        'command_class'   => 'PHPGit_Command', // class used to create a command
         'git_executable'  => '/usr/bin/git'       // path of the executable on the server
     );
 
@@ -63,7 +63,7 @@ class phpGitRepo
      * @param   string $dir real filesystem path of the repository
      * @param   boolean $debug
      * @param   array $options
-     * @return phpGitRepo
+     * @return PHPGit_Repository
      **/
     public static function create($dir, $debug = false, array $options = array())
     {
@@ -79,11 +79,11 @@ class phpGitRepo
     
     /**
      * Get the configuration for current 
-     * @return phpGitRepoConfig
+     * @return PHPGit_Configuration
      */
     public function getConfiguration()
     {
-      return new phpGitRepoConfig($this);
+      return new PHPGit_Configuration($this);
     }
 
     /**

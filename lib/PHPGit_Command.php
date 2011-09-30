@@ -1,6 +1,6 @@
 <?php
 
-class phpGitRepoCommand
+class PHPGit_Command
 {
     /**
      * @var string Real filesystem path of the repository
