@@ -83,7 +83,7 @@ $repoDir = sys_get_temp_dir().'/php-git-repo/'.uniqid();
 mkdir($repoDir);
 try
 {
-  $repo = phpGitRepo::create($repoDir);
+  $repo = PHPGit_Repository::create($repoDir);
   $t->pass('Create a new Git repository in filesystem');
 }
 catch(InvalidArgumentException $e)
@@ -117,8 +117,8 @@ $commit = $log[0];
 $t->ok(is_array($commit));
 $t->is($commit['message'], 'Remove README');
 
-$t->is($commit['author']['name'], $config->get(phpGitRepoConfig::USER_NAME));
-$t->is($commit['commiter']['name'], $config->get(phpGitRepoConfig::USER_NAME));
+$t->is($commit['author']['name'], $config->get(PHPGit_Configuration::USER_NAME));
+$t->is($commit['commiter']['name'], $config->get(PHPGit_Configuration::USER_NAME));
 $commit = $log[1];
 $t->is($commit['message'], 'Add README');
 
