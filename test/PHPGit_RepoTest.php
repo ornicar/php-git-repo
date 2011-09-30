@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__).'/vendor/lime.php';
-require_once dirname(__FILE__).'/phpGitRepoTestHelper.php';
+require_once dirname(__FILE__) . '/vendor/lime.php';
+require_once dirname(__FILE__) . '/PHPGit_RepoTestHelper.php';
 
 $t = new lime_test();
 
@@ -15,14 +15,11 @@ $t->is($repo->getCurrentBranch(), null, 'No current branch');
 
 $t->is($repo->hasBranch('master'), false, 'No master branch');
 
-try
-{
-  $repo->git('checkout master');
-  $t->fail('Can not checkout master');
-}
-catch(RuntimeException $e)
-{
-  $t->pass('Can not checkout master');
+try {
+    $repo->git('checkout master');
+    $t->fail('Can not checkout master');
+} catch (RuntimeException $e) {
+    $t->pass('Can not checkout master');
 }
 
 $repo->git('remote add origin git://github.com/ornicar/php-git-repo.git');
@@ -52,14 +49,11 @@ $repo->git('git checkout other_branch');
 
 $t->is($repo->getCurrentBranch(), 'other_branch', 'Current branch: other_branch');
 
-try
-{
-  $repo->git('wtf');
-  $t->fail('wtf is not a valid command');
-}
-catch(RuntimeException $e)
-{
-  $t->pass('wtf is not a valid command');
+try {
+    $repo->git('wtf');
+    $t->fail('wtf is not a valid command');
+} catch (RuntimeException $e) {
+    $t->pass('wtf is not a valid command');
 }
 
 $t->comment('Use a valid git binary: /usr/bin/git');
@@ -68,27 +62,21 @@ $repo = _createTmpGitRepo($t, array('git_executable' => '/usr/bin/git'));
 
 $t->comment('Use a invalid git binary: /usr/bin/git-foobar');
 
-try
-{
-  $repo = _createTmpGitRepo($t, array('git_executable' => '/usr/bin/git-foobar'));
-  $repo->git('status');
-  $t->fail('/usr/bin/git-foobar is not a valid git binary');
-}
-catch(RuntimeException $e)
-{
-  $t->pass('/usr/bin/git-foobar is not a valid git binary');
+try {
+    $repo = _createTmpGitRepo($t, array('git_executable' => '/usr/bin/git-foobar'));
+    $repo->git('status');
+    $t->fail('/usr/bin/git-foobar is not a valid git binary');
+} catch (RuntimeException $e) {
+    $t->pass('/usr/bin/git-foobar is not a valid git binary');
 }
 
-$repoDir = sys_get_temp_dir().'/php-git-repo/'.uniqid();
+$repoDir = sys_get_temp_dir() . '/php-git-repo/' . uniqid();
 mkdir($repoDir);
-try
-{
-  $repo = PHPGit_Repository::create($repoDir);
-  $t->pass('Create a new Git repository in filesystem');
-}
-catch(InvalidArgumentException $e)
-{
-  $t->fail($e->getMessage());
+try {
+    $repo = PHPGit_Repository::create($repoDir);
+    $t->pass('Create a new Git repository in filesystem');
+} catch (InvalidArgumentException $e) {
+    $t->fail($e->getMessage());
 }
 
 $repo = _createTmpGitRepo($t);
@@ -103,10 +91,10 @@ $config->remove('core.editor');
 $t->ok($config->get('core.editor', true));
 
 
-file_put_contents($repo->getDir().'/README', 'No, finally, do not read me.');
+file_put_contents($repo->getDir() . '/README', 'No, finally, do not read me.');
 $repo->git('add README');
 $repo->git('commit -m "Add README"');
-unlink($repo->getDir().'/README');
+unlink($repo->getDir() . '/README');
 $repo->git('rm README');
 $repo->git('commit -m "Remove README"');
 

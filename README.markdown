@@ -8,19 +8,19 @@ Provide an object oriented wrapper to run any Git command.
 - PHP >= 5.2 (PHP 5.3 works fine)
 - Git >= 1.5
 
-## Instanciate a phpGitRepo
+## Instanciate a PHPGit_Repository
 
-    $repo = new phpGitRepo('/path/to/the/git/repo');
+    $repo = new PHPGit_Repository('/path/to/the/git/repo');
 
 It does NOT create a Git repo, but a PHP object to manipulate an existing Git repo.
 
 ## Create a Git repository
 
-If the Git repository does not exist yet on filesystem, phpGitRepo can create it for you.
+If the Git repository does not exist yet on filesystem, PHPGit_Repository can create it for you.
 
-    $repo = phpGitRepo::create('/path/to/the/git/repo');
+    $repo = PHPGit_Repository::create('/path/to/the/git/repo');
 
-It runs `git init` and returns a phpGitRepo object.
+It runs `git init` and returns a PHPGit_Repository object.
 
 ## Run git commands
 
@@ -41,7 +41,7 @@ The git() method returns the output string:
 
     echo $repo->git('log --oneline');
 
-    e30b70b Move test repo to system tmp dir, introduce phpGitRepoCommand
+    e30b70b Move test repo to system tmp dir, introduce PHPGit_Command
     01fabb1 Add test repo
     12a95e6 Add base class with basic unit test
     58e7769 Fix readme
@@ -117,29 +117,29 @@ The first commit is the more recent one.
 
 ## Debug mode
 
-`phpGitRepo` constructor second parameter lets you enable debug mode.
+`PHPGit_Repository` constructor second parameter lets you enable debug mode.
 When debug mode is on, commands and their output are displayed.
 
-    $repo = new phpGitRepo('/path/to/the/git/repo', true);
+    $repo = new PHPGit_Repository('/path/to/the/git/repo', true);
 
 ## Configure
 
-`phpGitRepo` can be configured by passing an array of options to the constructor third parameter.
+`PHPGit_Repository` can be configured by passing an array of options to the constructor third parameter.
 
 ### Change git executable path
 
 You may need to provide the path to the git executable.
 
-    $repo = new phpGitRepo('/path/to/the/git/repo', false, array('git_executable' => '/usr/bin/git'));
+    $repo = new PHPGit_Repository('/path/to/the/git/repo', false, array('git_executable' => '/usr/bin/git'));
 
 On most Unix system, it's `/usr/bin/git`. On Windows, it may be `C:\Program Files\Git\bin`.
 
 ### Change the command class
 
-By default, `phpGitRepo` will use `phpGitRepoCommand` class to implement Git commands.
+By default, `PHPGit_Repository` will use `PHPGit_Command` class to implement Git commands.
 By replacing this option, you can use your own command implementation:
 
-    $repo = new phpGitRepo('/path/to/the/git/repo', false, array('command_class' => 'myGitCommand'));
+    $repo = new PHPGit_Repository('/path/to/the/git/repo', false, array('command_class' => 'myGitCommand'));
 
 ## Run test suite
 
