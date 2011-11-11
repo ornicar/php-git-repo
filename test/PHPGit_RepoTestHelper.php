@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../lib/PHPGit/PHPGit_Repository.php';
+require_once dirname(__FILE__) . '/../lib/PHPGit/Repository.php';
 
 /**
  *

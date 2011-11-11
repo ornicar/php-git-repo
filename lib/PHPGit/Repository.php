@@ -3,8 +3,8 @@
 /**
  * Include the command class
  */
-require_once(dirname(__FILE__).'/PHPGit_Command.php');
-require_once(dirname(__FILE__).'/PHPGit_Configuration.php');
+require_once(dirname(__FILE__).'/Command.php');
+require_once(dirname(__FILE__).'/Configuration.php');
 
 /**
  * Simple PHP wrapper for Git repository
