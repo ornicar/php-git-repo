@@ -91,7 +91,7 @@ class PHPGit_Repository
     {
         $options = array_merge(self::$defaultOptions, $options);
         $commandString = $options['git_executable'].' clone '.escapeshellarg($url).' '.escapeshellarg($dir);
-        $command = new $options['command_class']($dir, $commandString, $debug);
+        $command = new $options['command_class'](getcwd(), $commandString, $debug);
         $command->run();
 
         $repo = new self($dir, $debug, $options);

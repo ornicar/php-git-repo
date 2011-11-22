@@ -117,7 +117,6 @@ $t->is_deeply($repo->getTags(), array('first_tag', 'second_tag'), '2 tags');
 
 // cloneUrl
 $repoDir = sys_get_temp_dir() . '/php-git-repo/' . uniqid();
-mkdir($repoDir);
 try {
     $repo = PHPGit_Repository::cloneUrl('https://github.com/ornicar/php-git-repo.git', $repoDir);
     $t->pass('Create a new Git repository in filesystem');
