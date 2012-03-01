@@ -8,7 +8,7 @@ Provide an object oriented wrapper to run any Git command.
 - PHP >= 5.2 (PHP 5.3 works fine)
 - Git >= 1.5
 
-## Instanciate a PHPGit_Repository
+## Instantiate a PHPGit_Repository
 
     $repo = new PHPGit_Repository('/path/to/the/git/repo');
 
