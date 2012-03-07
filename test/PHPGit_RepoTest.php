@@ -114,3 +114,14 @@ $t->is_deeply($repo->getTags(), array(), 'No tags');
 $repo->git('tag -am "tag 1" first_tag');
 $repo->git('tag -am "tag 2" second_tag');
 $t->is_deeply($repo->getTags(), array('first_tag', 'second_tag'), '2 tags');
+
+// cloneUrl
+$repoDir = sys_get_temp_dir() . '/php-git-repo/' . uniqid();
+try {
+    $repo = PHPGit_Repository::cloneUrl('https://github.com/ornicar/php-git-repo.git', $repoDir);
+    $t->pass('Create a new Git repository in filesystem');
+    $t->is($repo->getCurrentBranch(), 'master', 'Current branch: master');
+
+} catch (InvalidArgumentException $e) {
+    $t->fail($e->getMessage());
+}

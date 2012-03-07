@@ -76,6 +76,28 @@ class PHPGit_Repository
 
         return $repo;
     }
+
+    /**
+     * Clone a new Git repository in filesystem, running "git clone"
+     * Returns the git repository wrapper
+     *
+     * @param   string $url of the repository
+     * @param   string $dir real filesystem path of the repository
+     * @param   boolean $debug
+     * @param   array $options
+     * @return PHPGit_Repository
+     **/
+    public static function cloneUrl($url, $dir, $debug = false, array $options = array())
+    {
+        $options = array_merge(self::$defaultOptions, $options);
+        $commandString = $options['git_executable'].' clone '.escapeshellarg($url).' '.escapeshellarg($dir);
+        $command = new $options['command_class'](getcwd(), $commandString, $debug);
+        $command->run();
+
+        $repo = new self($dir, $debug, $options);
+
+        return $repo;
+    }
     
     /**
      * Get the configuration for current 
