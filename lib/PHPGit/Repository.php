@@ -187,7 +187,7 @@ class PHPGit_Repository
      * Convert a formatted log string into an array
      * @param string $logOutput The output from a `git log` command formated using $this->logFormat
      */
-    private function parseLogsIntoArray(string $logOutput)
+    private function parseLogsIntoArray($logOutput)
     {
     	$commits = array();
     	foreach(explode("\n", $logOutput) as $line) {
