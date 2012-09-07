@@ -60,9 +60,16 @@ class PHPGit_Repository
     }
 
 
-    public function viewLogRange($startRange, $endRange)
+    /**
+     * Helper method to get a list of commits which exist in $sourceBranch that do not yet exist in $targetBranch.
+     *
+     * @param string $targetBranch
+     * @param string $sourceBranch
+     * @return array Formatted list of commits.
+     */
+    public function getDifferenceBetweenBranches($targetBranch, $sourceBranch)
     {
-    	$output = $this->git(sprintf('log %s..%s --date=%s --format=format:%s', $startRange, $endRange, $this->dateFormat, $this->logFormat));
+    	$output = $this->git(sprintf('log %s..%s --date=%s --format=format:%s', $targetBranch, $sourceBranch, $this->dateFormat, $this->logFormat));
     	return $this->parseLogsIntoArray($output);
     }
 
@@ -176,10 +183,14 @@ class PHPGit_Repository
         return $this->parseLogsIntoArray($output);
     }
 
-    private function parseLogsIntoArray($output)
+    /**
+     * Convert a formatted log string into an array
+     * @param string $logOutput The output from a `git log` command formated using $this->logFormat
+     */
+    private function parseLogsIntoArray(string $logOutput)
     {
     	$commits = array();
-    	foreach(explode("\n", $output) as $line) {
+    	foreach(explode("\n", $logOutput) as $line) {
     		$infos = explode('|', $line);
     		$commits[] = array(
     				'id' => $infos[0],
