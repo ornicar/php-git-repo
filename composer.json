@@ -1,0 +1,22 @@
+{
+    "name": "ornicar/php-git-repo",
+    "type": "library",
+    "description": "An object oriented wrapper to run any Git command",
+    "version": "1.3",
+    "homepage": "https://github.com/ornicar/php-git-repo",
+    "keywords": ["git"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thibault Duplessis",
+            "email": "thibault.duplessis@gmail.com",
+            "homepage": "http://ornicar.github.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.2"
+    },
+    "autoload": {
+        "psr-0": { "PHPGit_": "lib/" }
+    }
+}
