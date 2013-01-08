@@ -130,9 +130,9 @@ class PHPGit_Repository
      *
      * @return array list of branches names
      */
-    public function getBranches()
+    public function getBranches($flags='')
     {
-        return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->git('branch'))));
+        return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->git('branch '.$flags))));
     }
 
     /**
