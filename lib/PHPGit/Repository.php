@@ -24,6 +24,9 @@ class PHPGit_Repository
      */
     protected $dir;
 
+    protected $dateFormat = 'iso';
+    protected $logFormat = '"%H|%T|%an|%ae|%ad|%cn|%ce|%cd|%s"';
+
     /**
      * @var boolean Whether to enable debug mode or not
      * When debug mode is on, commands and their output are displayed
@@ -54,6 +57,20 @@ class PHPGit_Repository
         $this->options  = array_merge(self::$defaultOptions, $options);
 
         $this->checkIsValidGitRepo();
+    }
+
+
+    /**
+     * Helper method to get a list of commits which exist in $sourceBranch that do not yet exist in $targetBranch.
+     *
+     * @param string $targetBranch
+     * @param string $sourceBranch
+     * @return array Formatted list of commits.
+     */
+    public function getDifferenceBetweenBranches($targetBranch, $sourceBranch)
+    {
+    	$output = $this->git(sprintf('log %s..%s --date=%s --format=format:%s', $targetBranch, $sourceBranch, $this->dateFormat, $this->logFormat));
+    	return $this->parseLogsIntoArray($output);
     }
 
     /**
@@ -98,9 +115,9 @@ class PHPGit_Repository
 
         return $repo;
     }
-    
+
     /**
-     * Get the configuration for current 
+     * Get the configuration for current
      * @return PHPGit_Configuration
      */
     public function getConfiguration()
@@ -113,9 +130,9 @@ class PHPGit_Repository
      *
      * @return array list of branches names
      */
-    public function getBranches()
+    public function getBranches($flags='')
     {
-        return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->git('branch'))));
+        return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->git('branch '.$flags))));
     }
 
     /**
@@ -162,30 +179,36 @@ class PHPGit_Repository
      **/
     public function getCommits($nbCommits = 10)
     {
-        $dateFormat = 'iso';
-        $format = '"%H|%T|%an|%ae|%ad|%cn|%ce|%cd|%s"';
-        $output = $this->git(sprintf('log -n %d --date=%s --format=format:%s', $nbCommits, $dateFormat, $format));
-        $commits = array();
-        foreach(explode("\n", $output) as $line) {
-            $infos = explode('|', $line);
-            $commits[] = array(
-                'id' => $infos[0],
-                'tree' => $infos[1],
-                'author' => array(
-                    'name' => $infos[2],
-                    'email' => $infos[3]
-                ),
-                'authored_date' => $infos[4],
-                'commiter' => array(
-                    'name' => $infos[5],
-                    'email' => $infos[6]
-                ),
-                'committed_date' => $infos[7],
-                'message' => $infos[8]
-            );
-        }
+        $output = $this->git(sprintf('log -n %d --date=%s --format=format:%s', $nbCommits, $this->dateFormat, $this->logFormat));
+        return $this->parseLogsIntoArray($output);
+    }
 
-        return $commits;
+    /**
+     * Convert a formatted log string into an array
+     * @param string $logOutput The output from a `git log` command formated using $this->logFormat
+     */
+    private function parseLogsIntoArray($logOutput)
+    {
+    	$commits = array();
+    	foreach(explode("\n", $logOutput) as $line) {
+    		$infos = explode('|', $line);
+    		$commits[] = array(
+    				'id' => $infos[0],
+    				'tree' => $infos[1],
+    				'author' => array(
+    						'name' => $infos[2],
+    						'email' => $infos[3]
+    				),
+    				'authored_date' => $infos[4],
+    				'commiter' => array(
+    						'name' => $infos[5],
+    						'email' => $infos[6]
+    				),
+    				'committed_date' => $infos[7],
+    				'message' => $infos[8]
+    		);
+    	}
+    	return $commits;
     }
 
     /**
