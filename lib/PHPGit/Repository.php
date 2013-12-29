@@ -177,9 +177,9 @@ class PHPGit_Repository
      *
      * @return array list of commits and their properties
      **/
-    public function getCommits($nbCommits = 10)
+    public function getCommits($nbCommits = 10, $nbSkip = 0)
     {
-        $output = $this->git(sprintf('log -n %d --date=%s --format=format:%s', $nbCommits, $this->dateFormat, $this->logFormat));
+        $output = $this->git(sprintf('log -n %d --date=%s --format=format:%s --skip=%s', $nbCommits, $this->dateFormat, $this->logFormat, $nbSkip));
         return $this->parseLogsIntoArray($output);
     }
 
