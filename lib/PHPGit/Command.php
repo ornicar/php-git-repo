@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class PHPGit_Command
+ */
 class PHPGit_Command
 {
     /**
@@ -19,10 +22,11 @@ class PHPGit_Command
     protected $debug;
 
     /**
-     * Instanciate a new Git command
+     * Instantiate a new Git command
      *
      * @param   string $dir real filesystem path of the repository
-     * @param   array $options
+     * @param   string $commandString
+     * @param   bool   $debug
      */
     public function __construct($dir, $commandString, $debug)
     {
@@ -33,6 +37,9 @@ class PHPGit_Command
         $this->debug          = $debug;
     }
 
+    /**
+     * @return string
+     */
     public function run()
     {
         $commandToRun = sprintf('cd %s && %s', escapeshellarg($this->dir), $this->commandString);
@@ -68,4 +75,7 @@ class PHPGit_Command
     }
 }
 
+/**
+ * Class GitRuntimeException
+ */
 class GitRuntimeException extends RuntimeException {}
