@@ -19,10 +19,11 @@ class PHPGit_Command
     protected $debug;
 
     /**
-     * Instanciate a new Git command
+     * Instantiated a new Git command
      *
      * @param   string $dir real filesystem path of the repository
-     * @param   array $options
+     * @param   string $commandString
+     * @param   bool   $debug
      */
     public function __construct($dir, $commandString, $debug)
     {

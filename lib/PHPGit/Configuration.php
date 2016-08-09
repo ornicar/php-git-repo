@@ -44,12 +44,8 @@ class PHPGit_Configuration
     public function get($configOption, $fallback = null)
     {
         if (isset($this->configuration[$configOption])) {
-            $optionValue = $this->configuration[$configOption];
+            return  $this->configuration[$configOption];
         } else {
-            if (array_key_exists($configOption, $this->configuration)) {
-                $optionValue = $fallback;
-            }
-
             try {
                 $optionValue = $this->repository->git(sprintf('config --get ' . $configOption));
                 $this->configuration[$configOption] = $optionValue;

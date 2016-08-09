@@ -127,10 +127,10 @@ class PHPGit_Repository
 
     /**
      * Get branches list
-     *
+     * @param  string $flags
      * @return array list of branches names
      */
-    public function getBranches($flags='')
+    public function getBranches($flags = '')
     {
         return array_filter(preg_replace('/[\s\*]/', '', explode("\n", $this->git('branch '.$flags))));
     }
@@ -149,6 +149,7 @@ class PHPGit_Repository
                 return substr($branchLine, 2);
             }
         }
+        return $output;
     }
 
     /**
@@ -186,6 +187,7 @@ class PHPGit_Repository
     /**
      * Convert a formatted log string into an array
      * @param string $logOutput The output from a `git log` command formated using $this->logFormat
+     * @return array
      */
     private function parseLogsIntoArray($logOutput)
     {
