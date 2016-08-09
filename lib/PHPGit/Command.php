@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class PHPGit_Command
+ */
 class PHPGit_Command
 {
     /**
@@ -34,6 +37,9 @@ class PHPGit_Command
         $this->debug          = $debug;
     }
 
+    /**
+     * @return string
+     */
     public function run()
     {
         $commandToRun = sprintf('cd %s && %s', escapeshellarg($this->dir), $this->commandString);
@@ -69,4 +75,7 @@ class PHPGit_Command
     }
 }
 
+/**
+ * Class GitRuntimeException
+ */
 class GitRuntimeException extends RuntimeException {}
