@@ -19,7 +19,7 @@ class PHPGit_Command
     protected $debug;
 
     /**
-     * Instantiated a new Git command
+     * Instantiate a new Git command
      *
      * @param   string $dir real filesystem path of the repository
      * @param   string $commandString
